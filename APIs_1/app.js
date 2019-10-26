@@ -4,7 +4,7 @@ request('http://randomblogs.herokuapp.com/api/posts',function(error,response,bod
         var parsedData = JSON.parse(body);
         // console.log(parsedData[0]["title"]);
         parsedData.forEach(function(data) {
-            console.log(data['title']);
+            console.log("Title is: "+data['title']);
         })
     }
 });
