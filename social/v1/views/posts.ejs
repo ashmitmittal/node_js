@@ -1,4 +1,8 @@
+<% include partials/header %>
+
 <h1>This is the posts page!</h1>
+
+<a href="posts/new">Add new post</a>
 
 <% posts.forEach(function(post){ %>
     <div>
@@ -6,3 +10,5 @@
         <img src="<%= post.image %>">
     </div>
 <% }); %>
+
+<% include partials/footer %>
