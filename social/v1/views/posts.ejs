@@ -1,0 +1,8 @@
+<h1>This is the posts page!</h1>
+
+<% posts.forEach(function(post){ %>
+    <div>
+        <h4><%= post.name %></h4>
+        <img src="<%= post.image %>">
+    </div>
+<% }); %>
