@@ -1,7 +1,9 @@
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
+const express    = require("express"),
+      app        = express(),
+      bodyParser = require("body-parser"),
+      mongoose   = require("mongoose");
 
+mongoose.connect('mongodb://localhost/social', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
