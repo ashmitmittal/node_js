@@ -13,7 +13,8 @@ app.set("view engine","ejs");
 // SCHEMA SETUP
 var postsSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 //compiling schema into model
@@ -22,7 +23,8 @@ var Post = mongoose.model("Post",postsSchema);
 // Post.create(
 //     {
 //     name: "Ashi",
-//     image: "https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg"
+//     image: "https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg",
+//     description: "He is very beautiful"
 // },function(err,post){
 //     if(err){
 //         console.log(err);
@@ -33,9 +35,6 @@ var Post = mongoose.model("Post",postsSchema);
 // });
 
 // var posts = [
-//     {name: "Ashi",image: "https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg"},
-//     {name: "Archi",image: "https://i.pinimg.com/236x/dc/9f/25/dc9f251d735fac3d8a8497773a30a1ba.jpg"},
-//     {name: "Noni",image: "https://i.pinimg.com/236x/bd/2f/fa/bd2ffaa2743f756e7177795d16da9a8b.jpg"},
 //     {name: "Ashi",image: "https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg"},
 //     {name: "Archi",image: "https://i.pinimg.com/236x/dc/9f/25/dc9f251d735fac3d8a8497773a30a1ba.jpg"},
 //     {name: "Noni",image: "https://i.pinimg.com/236x/bd/2f/fa/bd2ffaa2743f756e7177795d16da9a8b.jpg"}
@@ -53,7 +52,7 @@ app.get("/posts",function(req,res){ //campgrounds
         if(err){
             console.log(err);
         } else {
-         res.render("posts",{posts: allposts});
+         res.render("index",{posts: allposts});
         }
     });
 });
@@ -63,7 +62,8 @@ app.post("/posts",function(req,res){
     //get data from form and add to posts
     var name = req.body.name;
     var image = req.body.image;
-    var newPosts = {name:name, image: image};
+    var desc = req.body.description;
+    var newPosts = {name:name, image: image,description: desc};
     //create a new post and save to db
     Post.create(newPosts,function(err,newlyCreated){
         if(err){
@@ -82,8 +82,17 @@ app.get("/posts/new",function(req,res){
     res.render("new");
 });
 
+//SHOW - shows more info about one post
 app.get("/posts/:id",function(req,res){
-    res.send("soooooooooon");
+    //find the post with provided ID
+    Post.findById(req.params.id,function(err,foundpost){
+        if(err){
+            console.log(err);
+        } else {
+            //render show template with that post
+            res.render("show",{post:foundpost});
+        }
+    });
 });
 
 app.listen(3000,function(){
