@@ -3,7 +3,7 @@ const express    = require("express"),
       bodyParser = require("body-parser"),
       mongoose   = require("mongoose");
 
-mongoose.connect('mongodb://localhost/social', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/social', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
