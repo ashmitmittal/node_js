@@ -3,7 +3,7 @@ const express    = require("express"),
       bodyParser = require("body-parser"),
       mongoose   = require("mongoose");
 
-mongoose.connect('mongodb://localhost:27017/social', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/social', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
@@ -16,6 +16,7 @@ var postsSchema = new mongoose.Schema({
     image: String
 });
 
+//compiling schema into model
 var Post = mongoose.model("Post",postsSchema);
 
 // Post.create(
@@ -45,6 +46,7 @@ app.get("/",function(req,res){
     res.render("landing");
 });
 
+// INDEX- show all posts of socialMedia
 app.get("/posts",function(req,res){ //campgrounds
     //get all posts from db
     Post.find({},function(err,allposts){
@@ -56,6 +58,7 @@ app.get("/posts",function(req,res){ //campgrounds
     });
 });
 
+// CREATE - add new posts to DB
 app.post("/posts",function(req,res){
     //get data from form and add to posts
     var name = req.body.name;
@@ -74,8 +77,13 @@ app.post("/posts",function(req,res){
     // res.redirect("/posts");
 });
 
+//NEW - show form to create a new post
 app.get("/posts/new",function(req,res){
     res.render("new");
+});
+
+app.get("/posts/:id",function(req,res){
+    res.send("soooooooooon");
 });
 
 app.listen(3000,function(){
