@@ -1,7 +1,8 @@
 const express    = require("express"),
       app        = express(),
       bodyParser = require("body-parser"),
-      mongoose   = require("mongoose");
+      mongoose   = require("mongoose"),
+      Post       = require("./models/post")
 
 mongoose.connect('mongodb://localhost/social', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
@@ -10,15 +11,6 @@ app.use(express.static("public"));
 
 app.set("view engine","ejs");
 
-// SCHEMA SETUP
-var postsSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-//compiling schema into model
-var Post = mongoose.model("Post",postsSchema);
 
 // Post.create(
 //     {
