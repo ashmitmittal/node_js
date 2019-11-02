@@ -5,8 +5,6 @@ const express    = require("express"),
       Post       = require("./models/post"),
       seedDB     = require("./seeds");
 
-//all posts will remove form this
-seedDB();
 
 mongoose.connect('mongodb://localhost/social', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
@@ -14,6 +12,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.set("view engine","ejs");
+
+//all posts will remove form this
+seedDB();
 
 // var posts = [
 //     {name: "Ashi",image: "https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg"},
