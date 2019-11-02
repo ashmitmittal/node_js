@@ -15,21 +15,6 @@ app.use(express.static("public"));
 
 app.set("view engine","ejs");
 
-
-// Post.create(
-//     {
-//     name: "Ashi",
-//     image: "https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg",
-//     description: "He is very beautiful"
-// },function(err,post){
-//     if(err){
-//         console.log(err);
-//     } else{
-//         console.log("NEWLY created post");
-//         console.log(post);
-//     }
-// });
-
 // var posts = [
 //     {name: "Ashi",image: "https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg"},
 //     {name: "Archi",image: "https://i.pinimg.com/236x/dc/9f/25/dc9f251d735fac3d8a8497773a30a1ba.jpg"},
@@ -81,7 +66,7 @@ app.get("/posts/new",function(req,res){
 //SHOW - shows more info about one post
 app.get("/posts/:id",function(req,res){
     //find the post with provided ID
-    Post.findById(req.params.id,function(err,foundpost){
+    Post.findById(req.params.id).populate("comments").exec(function(err,foundpost){
         if(err){
             console.log(err);
         } else {
