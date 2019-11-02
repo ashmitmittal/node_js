@@ -2,7 +2,11 @@ const express    = require("express"),
       app        = express(),
       bodyParser = require("body-parser"),
       mongoose   = require("mongoose"),
-      Post       = require("./models/post")
+      Post       = require("./models/post"),
+      seedDB     = require("./seeds");
+
+//all posts will remove form this
+seedDB();
 
 mongoose.connect('mongodb://localhost/social', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
