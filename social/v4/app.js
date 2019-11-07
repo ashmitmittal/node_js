@@ -34,7 +34,7 @@ app.get("/posts",function(req,res){ //campgrounds
         if(err){
             console.log(err);
         } else {
-         res.render("index",{posts: allposts});
+         res.render("posts/index",{posts: allposts});
         }
     });
 });
@@ -61,7 +61,7 @@ app.post("/posts",function(req,res){
 
 //NEW - show form to create a new post
 app.get("/posts/new",function(req,res){
-    res.render("new");
+    res.render("posts/new");
 });
 
 //SHOW - shows more info about one post
@@ -72,9 +72,18 @@ app.get("/posts/:id",function(req,res){
             console.log(err);
         } else {
             //render show template with that post
-            res.render("show",{post:foundpost});
+            res.render("posts/show",{post:foundpost});
         }
     });
+});
+
+
+// ============================
+//  COMMENTS ROUTES
+// ============================
+
+app.get("/posts/:id/comments/new",function(req, res){
+    res.render("comments/new");
 });
 
 app.listen(3000,function(){
