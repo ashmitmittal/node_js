@@ -83,7 +83,14 @@ app.get("/posts/:id",function(req,res){
 // ============================
 
 app.get("/posts/:id/comments/new",function(req, res){
-    res.render("comments/new");
+    //find post by id
+    Post.findById(req.params.id,function(err,post){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("comments/new",{post:post});
+        }
+    });
 });
 
 app.listen(3000,function(){
