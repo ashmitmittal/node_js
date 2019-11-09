@@ -6,12 +6,12 @@ var data = [
     {
         name: "Ashi",
         image:"https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg",
-        description:"Handsome Guy"
+        description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor ipsum non arcu condimentum finibus. Nunc sagittis facilisis ante, non egestas nisl. Nunc placerat neque pulvinar ipsum sollicitudin mollis. Nullam tempor lacinia ultricies. In at velit in enim rhoncus sollicitudin. Nullam ac lectus sed lacus efficitur iaculis at viverra lectus. Mauris ullamcorper,"
     },
     {
         name: "Archi",
         image:"https://i.pinimg.com/236x/dc/9f/25/dc9f251d735fac3d8a8497773a30a1ba.jpg",
-        description:"Beautiful girl"
+        description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor ipsum non arcu condimentum finibus. Nunc sagittis facilisis ante, non egestas nisl. Nunc placerat neque pulvinar ipsum sollicitudin mollis. Nullam tempor lacinia ultricies. In at velit in enim rhoncus sollicitudin. Nullam ac lectus sed lacus efficitur iaculis at viverra lectus. Mauris ullamcorper,"
     }
 ]
 
