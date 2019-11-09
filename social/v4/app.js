@@ -3,6 +3,7 @@ const express    = require("express"),
       bodyParser = require("body-parser"),
       mongoose   = require("mongoose"),
       Post       = require("./models/post"),
+      Comment    = require("./models/comment"),
       seedDB     = require("./seeds");
 
 
@@ -91,6 +92,29 @@ app.get("/posts/:id/comments/new",function(req, res){
             res.render("comments/new",{post:post});
         }
     });
+});
+
+app.post("/posts/:id/comments",function(req,res){
+    //lookup posts usign id
+    Post.findById(req.params.id,function(err,post){
+        if(err){
+            console.log(err);
+            res.redirect("/posts");
+        } else{
+            Comment.create(req.body.comment,function(err,comment){
+                if(err){
+                    console.log(err);
+                } else {
+                    post.comments.push(comment);
+                    post.save();
+                    res.redirect("/posts/"+post._id);
+                }
+            });
+        }
+    });
+    //create new comment
+    //connect new comment to post
+    //redirect post show page
 });
 
 app.listen(3000,function(){
