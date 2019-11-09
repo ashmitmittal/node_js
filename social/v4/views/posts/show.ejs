@@ -6,6 +6,10 @@
 
 <p><%= post.description %></p>
 
+<p>
+    <a class="btn btn-outline-success" href="/posts/<%= post._id%>/comments/new">Add Comment</a>
+</p>
+
 <% post.comments.forEach(function(comment){ %>
     <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
 <% }) %>
