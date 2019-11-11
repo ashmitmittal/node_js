@@ -66,11 +66,16 @@ app.get("/login",function(req,res){
 });
 
 //handling user login
+//middleware
 app.post("/login",passport.authenticate("local",{
     successRedirect: "/secret",
     failureRedirect: "/login"
 }),function(req,res){
+});
 
+app.get("/logout",function(req,res){
+    req.logOut();
+    res.redirect("/");
 });
 
 app.listen(3000,function(){
