@@ -83,7 +83,7 @@ app.get("/logout",function(req,res){
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next();
-    } else{
+    } else{ 
         res.redirect("/login");
     }
 }
