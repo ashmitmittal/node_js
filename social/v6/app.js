@@ -20,11 +20,18 @@ app.set("view engine","ejs");
 //all posts will remove form this
 seedDB();
 
-// var posts = [
-//     {name: "Ashi",image: "https://i.pinimg.com/236x/63/d2/4b/63d24b8198b2a949faf73b7886886d15.jpg"},
-//     {name: "Archi",image: "https://i.pinimg.com/236x/dc/9f/25/dc9f251d735fac3d8a8497773a30a1ba.jpg"},
-//     {name: "Noni",image: "https://i.pinimg.com/236x/bd/2f/fa/bd2ffaa2743f756e7177795d16da9a8b.jpg"}
-// ]
+//PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret:"i am losser",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 app.get("/",function(req,res){
@@ -118,6 +125,29 @@ app.post("/posts/:id/comments",function(req,res){
     //create new comment
     //connect new comment to post
     //redirect post show page
+});
+
+
+//===============================
+//          AUTH ROUTES
+//===============================
+
+//show register form
+app.get("/register",function(req,res){
+    res.render("register");
+});
+//handel register logic
+app.post("/register",function(req,res){
+    var newUser = new User({username: req.body.username});
+    User.register(newUser,req.body.password,function(err,user){
+        if(err){
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req,res,function(){
+            res.redirect("/posts");
+        });
+    });
 });
 
 app.listen(3000,function(){
