@@ -93,7 +93,7 @@ app.get("/posts/:id",function(req,res){
 //  COMMENTS ROUTES
 // ============================
 
-app.get("/posts/:id/comments/new",function(req, res){
+app.get("/posts/:id/comments/new",isLoggedIn,function(req, res){
     //find post by id
     Post.findById(req.params.id,function(err,post){
         if(err){
@@ -104,7 +104,7 @@ app.get("/posts/:id/comments/new",function(req, res){
     });
 });
 
-app.post("/posts/:id/comments",function(req,res){
+app.post("/posts/:id/comments",isLoggedIn,function(req,res){
     //lookup posts usign id
     Post.findById(req.params.id,function(err,post){
         if(err){
@@ -165,6 +165,19 @@ app.post("/login",passport.authenticate("local", //middleware
     }), function(req,res){
         console.log("sucessssss");
 });
+
+//logout route
+app.get("/logout",function(req,res){
+    req.logOut();
+    res.redirect("/posts");
+});
+
+function isLoggedIn(req,res,next){   //middleware
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
 
 app.listen(3000,function(){
     console.log("Social app started at port 3000!");
