@@ -150,6 +150,22 @@ app.post("/register",function(req,res){
     });
 });
 
+// show login form
+app.get("/login",function(req,res){
+    res.render("login");
+});
+
+//handel login logic
+
+
+app.post("/login",passport.authenticate("local", //middleware
+    {
+        successRedirect:"/posts",
+        failureRedirect: "/login"
+    }), function(req,res){
+        console.log("sucessssss");
+});
+
 app.listen(3000,function(){
     console.log("Social app started at port 3000!");
 });
