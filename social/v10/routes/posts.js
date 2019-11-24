@@ -56,6 +56,30 @@ router.get("/:id",function(req,res){
     });
 });
 
+// EDIT POST ROUTE
+router.get("/:id/edit",function(req,res){
+    Post.findById(req.params.id,function(err,foundPost){
+        if(err){
+            res.redirect("/posts");
+        } else {
+            res.render("posts/edit",{post: foundPost});
+        }
+    })
+});
+
+router.put("/:id",function(req,res){
+    //update post
+    Post.findByIdAndUpdate(req.params.id,req.body.post,function(err,updatedPost){
+        if(err){
+            res.redirect("/posts");
+        } else {
+            res.redirect("/posts/"+req.params.id);
+        }
+    });
+});
+
+//UPDATE POST ROUTE
+
 function isLoggedIn(req,res,next){   //middleware
     if(req.isAuthenticated()){
         return next();

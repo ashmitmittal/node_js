@@ -4,6 +4,7 @@ const express           = require("express"),
       mongoose          = require("mongoose"),
       passport          = require("passport"),
       LocalStrategy     = require("passport-local"),
+      methodOverride    = require("method-override"),
       Post              = require("./models/post"),
       Comment           = require("./models/comment"),
       User              = require("./models/user"),
@@ -15,9 +16,11 @@ var commentRoutes = require("./routes/comments"),
     authRoutes    = require("./routes/index");
 
 mongoose.connect('mongodb://localhost/social', {useUnifiedTopology: true, useNewUrlParser: true});
+mongoose.set('useFindAndModify', false);
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 
 app.set("view engine","ejs");
 
