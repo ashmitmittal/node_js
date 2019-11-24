@@ -22,7 +22,7 @@ app.use(express.static("public"));
 app.set("view engine","ejs");
 
 //all posts will remove form this
-seedDB();
+// seedDB(); // seed the database
 
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({
