@@ -57,17 +57,15 @@ router.get("/:id",function(req,res){
 });
 
 // EDIT POST ROUTE
-router.get("/:id/edit",function(req,res){
-    Post.findById(req.params.id,function(err,foundPost){
-        if(err){
-            res.redirect("/posts");
-        } else {
+router.get("/:id/edit",checkPostOwner,function(req,res){
+        Post.findById(req.params.id,function(err,foundPost){
             res.render("posts/edit",{post: foundPost});
-        }
-    })
+        });
 });
 
-router.put("/:id",function(req,res){
+
+//UPDATE POST ROUTE
+router.put("/:id",checkPostOwner,function(req,res){
     //update post
     Post.findByIdAndUpdate(req.params.id,req.body.post,function(err,updatedPost){
         if(err){
@@ -78,7 +76,16 @@ router.put("/:id",function(req,res){
     });
 });
 
-//UPDATE POST ROUTE
+// DESTROY POST ROUTE
+router.delete("/:id",checkPostOwner,function(req,res){
+    Post.findByIdAndRemove(req.params.id,function(err){
+        if(err){
+            res.redirect("/posts");
+        } else {
+            res.redirect("/posts");
+        }
+    })
+});
 
 function isLoggedIn(req,res,next){   //middleware
     if(req.isAuthenticated()){
@@ -87,5 +94,24 @@ function isLoggedIn(req,res,next){   //middleware
     res.redirect("/login");
 };
 
+function checkPostOwner(req,res,next) //middleware
+{
+    if(req.isAuthenticated()){
+        Post.findById(req.params.id,function(err,foundPost){
+            if(err){
+                res.redirect("back");
+            } else {
+                //does user own that post
+                if(foundPost.author.id.equals(req.user._id)){
+                    next();
+                } else {
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+        res.redirect("back");
+    }
+}
 
 module.exports = router;

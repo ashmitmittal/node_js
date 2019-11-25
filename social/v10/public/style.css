@@ -40,3 +40,25 @@
     color: #a8ffbf;
     border-color: #a8ffbf;
 }
+
+#profile_pic{
+    height: 200px;
+    width: 200px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: block;
+    position:relative;
+    top:-70px;
+    z-index: 1;
+    border: 5px solid white;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#profile_name{
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    top: -50px;
+}
