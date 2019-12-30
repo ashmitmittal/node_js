@@ -8,6 +8,10 @@
 			rel="stylesheet"
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
+			rel="stylesheet"
+		/>
 		<script
 			src="https://code.jquery.com/jquery-3.4.1.min.js"
 			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -17,22 +21,45 @@
 		<style>
 			body {
 				margin-top: 20px;
+				background-color: #eaffd0;
+				color: #f38181;
+				font-family: "Source Sans Pro", sans-serif;
 			}
 			#messageArea {
 				display: none;
 			}
+			#userFormArea {
+				text-align: center;
+			}
+			#userFormArea form {
+				margin-top: 15%;
+			}
+			#userFormArea p {
+				font-weight: 500;
+				font-size: large;
+			}
+			#userFormArea button {
+				margin-top: 5%;
+			}
+			.list-group-item {
+				color: #95e1d3;
+			}
+			.btn {
+				background-color: #95e1d3;
+			}
 		</style>
-		<title>IO CHAT APP</title>
+		<title>CHAT NOW</title>
 	</head>
 	<body>
 		<div class="container">
 			<div id="userFormArea" class="row">
 				<div class="col-md-12">
+					<h1 style="color: #7c9e98; margin-top: 10%;">CHAT NOW</h1>
 					<form id="userForm">
 						<div class="form-group">
-							<label>Enter Your Name</label>
+							<p>Enter Your Name</p>
 							<input type="text" class="form-control" id="username" />
-							<button type="submit" class="btn btn-outline-success">
+							<button type="submit" class="btn btn-outline-primary">
 								Login
 							</button>
 						</div>
@@ -54,6 +81,7 @@
 								<label>Enter Message</label>
 								<textarea id="message" class="form-control"></textarea>
 								<input
+									style="margin-top: 1%; margin-left: auto; margin-right: auto;"
 									type="submit"
 									class="btn btn-primary"
 									value="Send Message"
