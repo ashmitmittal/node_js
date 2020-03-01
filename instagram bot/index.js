@@ -1,11 +1,11 @@
-const ig = require("./insta");
+const ig = require('./insta');
 
 (async () => {
 	await ig.initialize();
 
-	await ig.login("manshu616", "Tomjarry@123");
+	await ig.login('', ''); //enter your crediantials email and password
 
-	await ig.likeTagsProcess(["cars", "carss"]);
+	await ig.likeTagsProcess(['cars', 'carss']);
 
 	debugger;
 })();
