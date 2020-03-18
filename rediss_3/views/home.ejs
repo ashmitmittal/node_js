@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Redis</title>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+			crossorigin="anonymous"
+		/>
+		<style>
+			body {
+				background-color: #414141;
+			}
+			.btn-primary {
+				background-color: #ff0000;
+				border: #af0404;
+			}
+			.btn-primary:hover {
+				background-color: #af0404;
+				border: #ff0000;
+			}
+			.btn-primary:active:focus {
+				background-color: #af0404 !important;
+				border: #ff0000 !important;
+			}
+			.form-control {
+				background-color: #252525;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<form action="/" method="POST">
+				<div class="form-group">
+					<label for="exampleFormControlSelect1"></label>
+					<select
+						name="dataT"
+						class="form-control"
+						id="exampleFormControlSelect1"
+						onchange="changes()"
+					>
+						<option value="Integer">Integer</option>
+						<option value="String">String</option>
+						<option value="Hashes">Hashes</option>
+					</select>
+				</div>
+				<div id="datas">
+					<div class="form-group">
+						<input
+							type="text"
+							name="key"
+							class="form-control"
+							placeholder="key"
+						/>
+					</div>
+
+					<div class="form-group">
+						<input
+							type="text"
+							name="value"
+							class="form-control"
+							placeholder="value"
+						/>
+					</div>
+				</div>
+
+				<button class="btn btn-primary d-block m-auto">
+					Submit
+				</button>
+			</form>
+		</div>
+		<script>
+			function changes() {
+				var selected = document.getElementById('exampleFormControlSelect1')
+					.value;
+				if (selected == 'Hashes') {
+					var field = prompt('how many fields');
+					if (field) {
+						document.getElementById('datas').innerHTML = '';
+						let html = ``;
+						for (var i = 0; i < field; i++) {
+							let html = `<div class="form-group">
+                        <input
+                            type="text"
+                            name="value"
+                            class="form-control"
+                            placeholder="value"
+                        />
+                    </div>`;
+							let div = document.createElement('div');
+							div.innerHTML = html;
+							document.getElementById('datas').appendChild(div);
+						}
+					} else {
+						alert('please enter number');
+					}
+				} else {
+					document.getElementById('datas').innerHTML = '';
+					let html = `<div class="form-group">
+					<input
+						type="text"
+						name="key"
+						class="form-control"
+						placeholder="key"
+					/>
+				</div>
+				<div class="form-group">
+					<input
+						type="text"
+						name="value"
+						class="form-control"
+						placeholder="value"
+					/>
+                </div>`;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas').appendChild(div);
+				}
+			}
+		</script>
+	</body>
+</html>
