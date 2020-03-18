@@ -48,16 +48,15 @@
 						<option value="Hashes">Hashes</option>
 					</select>
 				</div>
+				<div class="form-group">
+					<input
+						type="text"
+						name="key"
+						class="form-control"
+						placeholder="key"
+					/>
+				</div>
 				<div id="datas">
-					<div class="form-group">
-						<input
-							type="text"
-							name="key"
-							class="form-control"
-							placeholder="key"
-						/>
-					</div>
-
 					<div class="form-group">
 						<input
 							type="text"
@@ -100,14 +99,7 @@
 					}
 				} else {
 					document.getElementById('datas').innerHTML = '';
-					let html = `<div class="form-group">
-					<input
-						type="text"
-						name="key"
-						class="form-control"
-						placeholder="key"
-					/>
-				</div>
+					let html = `
 				<div class="form-group">
 					<input
 						type="text"

@@ -24,7 +24,9 @@ app.post('/', (req, res) => {
 			res.redirect('/');
 		}
 	} else {
-		client.hmset(req.body.value, (err, reply) => {
+		var d = req.body.value;
+		d.unshift(req.body.key);
+		client.hmset(d, (err, reply) => {
 			if (err) {
 				console.log(err);
 			}
