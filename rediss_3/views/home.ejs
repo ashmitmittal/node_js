@@ -77,25 +77,26 @@
 				var selected = document.getElementById('exampleFormControlSelect1')
 					.value;
 				if (selected == 'Hashes') {
-					var field = prompt('how many fields');
+					var field = prompt('Please enter more than 1 fields');
 					if (field) {
 						document.getElementById('datas').innerHTML = '';
 						let html = ``;
 						for (var i = 0; i < field; i++) {
 							let html = `<div class="form-group">
-                        <input
-                            type="text"
-                            name="value"
-                            class="form-control"
-                            placeholder="value"
-                        />
-                    </div>`;
+			                     <input
+			                         type="text"
+			                         name="value"
+			                         class="form-control"
+			                         placeholder="value"
+			                     />
+			                 </div>`;
 							let div = document.createElement('div');
 							div.innerHTML = html;
 							document.getElementById('datas').appendChild(div);
 						}
 					} else {
-						alert('please enter number');
+						alert('abh to enter karna padhega');
+						changes();
 					}
 				} else {
 					document.getElementById('datas').innerHTML = '';
@@ -107,7 +108,7 @@
 						class="form-control"
 						placeholder="value"
 					/>
-                </div>`;
+			             </div>`;
 					let div = document.createElement('div');
 					div.innerHTML = html;
 					document.getElementById('datas').appendChild(div);
