@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Redis</title>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+			crossorigin="anonymous"
+		/>
+		<style>
+			body {
+				background-color: #414141;
+				font-family: sans-serif;
+			}
+			.btn-primary {
+				background-color: #ff0000;
+				border: #af0404;
+			}
+			.btn-primary:hover {
+				background-color: #af0404;
+				border: #ff0000;
+			}
+			.btn-primary:active:focus {
+				background-color: #af0404 !important;
+				border: #ff0000 !important;
+			}
+			.form-control {
+				background-color: #252525;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<form>
+				<div class="form-group">
+					<label for="exampleFormControlSelect1"></label>
+					<select
+						name="dataT"
+						class="form-control"
+						id="exampleFormControlSelect1"
+						onchange="changes()"
+					>
+						<option value="String">string</option>
+						<option value="Hashes">Hashes</option>
+						<option value="Zadd">Sorted Sets</option>
+						<!-- <option value="List">Lists</option> -->
+					</select>
+				</div>
+				<div class="form-group">
+					<input
+						id="key"
+						type="text"
+						name="key"
+						class="form-control"
+						placeholder="key"
+						required
+					/>
+				</div>
+				<div id="datas"></div>
+			</form>
+			<button class="btn btn-primary d-block m-auto" onclick="handleSubmit()">
+				Submit
+			</button>
+			<div id="resD"></div>
+		</div>
+		<script>
+			async function handleSubmit() {
+				let selected = document.getElementById('exampleFormControlSelect1')
+					.value;
+				let data;
+				if (selected == 'String') {
+					data = {
+						dataT: selected,
+						key: document.getElementById('key').value
+					};
+				} else if (selected == 'Hashes') {
+					data = {
+						dataT: selected,
+						key: document.getElementById('key').value,
+						field: document.getElementById('field').value
+					};
+				} else if (selected == 'Zadd') {
+					data = {
+						dataT: selected,
+						key: document.getElementById('key').value
+					};
+				}
+				const response = await fetch('/getdata', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				});
+				const d = await response.json();
+
+				var h2 = document.createElement('h2');
+				document.getElementById('resD').innerHTML = '';
+				if (d.value) {
+					h2.classList.add('alert', 'alert-primary', 'm-5', 'text-center');
+					h2.innerText = d.value;
+				} else {
+					h2.classList.add('alert', 'alert-danger', 'm-5', 'text-center');
+					h2.innerText = 'please enter correct fields';
+				}
+				document.getElementById('resD').appendChild(h2);
+			}
+
+			function changes() {
+				var selected = document.getElementById('exampleFormControlSelect1')
+					.value;
+				if (selected == 'Hashes') {
+					document.getElementById('datas').innerHTML = '';
+					let html = `
+			                 <div class="form-group">
+                                 <input
+                                 id="field"
+			                         type="text"
+			                         name="field"
+			                         class="form-control"
+									 placeholder="field"
+									 required
+			                     />
+			                 </div>
+			                 `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas').appendChild(div);
+				}
+				if (selected == 'Zadd') {
+					document.getElementById('datas').innerHTML = '';
+				}
+			}
+		</script>
+	</body>
+</html>

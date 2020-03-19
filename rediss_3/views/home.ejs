@@ -13,6 +13,7 @@
 		<style>
 			body {
 				background-color: #414141;
+				font-family: sans-serif;
 			}
 			.btn-primary {
 				background-color: #ff0000;
@@ -46,6 +47,8 @@
 						<option value="Integer">Integer</option>
 						<option value="String">String</option>
 						<option value="Hashes">Hashes</option>
+						<option value="Zadd">Sorted Sets</option>
+						<option value="List">Lists</option>
 					</select>
 				</div>
 				<div class="form-group">
@@ -54,15 +57,17 @@
 						name="key"
 						class="form-control"
 						placeholder="key"
+						required
 					/>
 				</div>
 				<div id="datas">
 					<div class="form-group">
 						<input
-							type="text"
+							type="number"
 							name="value"
 							class="form-control"
 							placeholder="value"
+							required
 						/>
 					</div>
 				</div>
@@ -87,7 +92,8 @@
 			                         type="text"
 			                         name="value"
 			                         class="form-control"
-			                         placeholder="value"
+									 placeholder="value"
+									 required
 			                     />
 			                 </div>`;
 							let div = document.createElement('div');
@@ -98,7 +104,7 @@
 						alert('abh to enter karna padhega');
 						changes();
 					}
-				} else {
+				} else if (selected == 'String') {
 					document.getElementById('datas').innerHTML = '';
 					let html = `
 				<div class="form-group">
@@ -107,6 +113,61 @@
 						name="value"
 						class="form-control"
 						placeholder="value"
+						required
+					/>
+			             </div>`;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas').appendChild(div);
+				} else if (selected == 'Integer') {
+					document.getElementById('datas').innerHTML = '';
+					let html = `
+				<div class="form-group">
+					<input
+						type="number"
+						name="value"
+						class="form-control"
+						placeholder="value"
+						required
+					/>
+			             </div>`;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas').appendChild(div);
+				} else if (selected == 'Zadd') {
+					document.getElementById('datas').innerHTML = '';
+					let html = `
+					<div class="form-group">
+						<input
+						type="text"
+						name="rank"
+						class="form-control"
+						placeholder="rank"
+						required
+					/>
+					</div>
+				<div class="form-group">
+					<input
+						type="text"
+						name="value"
+						class="form-control"
+						placeholder="value"
+						required
+					/>
+			             </div>`;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas').appendChild(div);
+				} else if (selected == 'List') {
+					document.getElementById('datas').innerHTML = '';
+					let html = `
+				<div class="form-group">
+					<input
+						type="text"
+						name="value"
+						class="form-control"
+						placeholder="list item"
+						required
 					/>
 			             </div>`;
 					let div = document.createElement('div');
