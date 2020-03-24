@@ -31,6 +31,9 @@
 				background-color: #252525;
 				color: white;
 			}
+			label {
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
@@ -46,21 +49,11 @@
 					>
 						<option value="String">string</option>
 						<option value="Hashes">Hashes</option>
-						<option value="Zadd">Sorted Sets</option>
-						<!-- <option value="List">Lists</option> -->
+						<option value="sSets">Sorted Sets</option>
 					</select>
 				</div>
-				<div class="form-group">
-					<input
-						id="key"
-						type="text"
-						name="key"
-						class="form-control"
-						placeholder="key"
-						required
-					/>
-				</div>
 				<div id="datas"></div>
+				<div id="datas2"></div>
 			</form>
 			<button class="btn btn-primary d-block m-auto" onclick="handleSubmit()">
 				Submit
@@ -69,25 +62,51 @@
 		</div>
 		<script>
 			async function handleSubmit() {
-				let selected = document.getElementById('exampleFormControlSelect1')
+				let selected2 = document.getElementById('exampleFormControlSelect2')
 					.value;
 				let data;
-				if (selected == 'String') {
+				if (selected2 == 'hget' || selected2 == 'hdel') {
 					data = {
-						dataT: selected,
-						key: document.getElementById('key').value
-					};
-				} else if (selected == 'Hashes') {
-					data = {
-						dataT: selected,
+						cmdT: selected2,
 						key: document.getElementById('key').value,
 						field: document.getElementById('field').value
 					};
-				} else if (selected == 'Zadd') {
+				} else if (selected2 == 'hmset') {
 					data = {
-						dataT: selected,
+						cmdT: selected2,
+						key: document.getElementById('key').value,
+						field: document.getElementById('field').value,
+						value: document.getElementById('value').value
+					};
+				} else if (selected2 == 'set') {
+					data = {
+						cmdT: selected2,
+						key: document.getElementById('key').value,
+						value: document.getElementById('value').value
+					};
+				} else if (selected2 == 'get') {
+					data = {
+						cmdT: selected2,
 						key: document.getElementById('key').value
 					};
+				} else if (selected2 == 'zadd') {
+					data = {
+						cmdT: selected2,
+						key: document.getElementById('key').value,
+						rank: document.getElementById('rank').value,
+						value: document.getElementById('value').value
+					};
+				} else if (selected2 == 'zrange') {
+					data = {
+						cmdT: selected2,
+						key: document.getElementById('key').value
+					};
+				}
+
+				// deal with fetch
+				if (!data.key) {
+					alert('please fill the fields');
+					return;
 				}
 				const response = await fetch('/getdata', {
 					method: 'POST',
@@ -108,7 +127,13 @@
 					h2.innerText = 'please enter correct fields';
 				}
 				document.getElementById('resD').appendChild(h2);
+				// deal with fetch end
 			}
+
+			// =====================================
+			// =====================================
+			// =====================================
+			// =====================================
 
 			function changes() {
 				var selected = document.getElementById('exampleFormControlSelect1')
@@ -116,25 +141,235 @@
 				if (selected == 'Hashes') {
 					document.getElementById('datas').innerHTML = '';
 					let html = `
-			                 <div class="form-group">
-                                 <input
-                                 id="field"
-			                         type="text"
-			                         name="field"
-			                         class="form-control"
-									 placeholder="field"
-									 required
-			                     />
-			                 </div>
-			                 `;
+					<div class="form-group">
+					<label for="exampleFormControlSelect2">Command Type</label>
+					<select
+						name="cmdT"
+						class="form-control"
+						id="exampleFormControlSelect2"
+						onchange="changes2()"
+					>
+						<option value="hmset">HMSET</option>
+						<option value="hdel">HDEL</option>
+						<option value="hget">HGET</option>
+					</select>
+				</div>
+			     `;
 					let div = document.createElement('div');
 					div.innerHTML = html;
 					document.getElementById('datas').appendChild(div);
 				}
-				if (selected == 'Zadd') {
+
+				if (selected == 'String') {
 					document.getElementById('datas').innerHTML = '';
+					let html = `
+					<div class="form-group">
+					<label for="exampleFormControlSelect2">Command Type</label>
+					<select
+						name="cmdT"
+						class="form-control"
+						id="exampleFormControlSelect2"
+						onchange="changes2()"
+					>
+						<option value="set">SET</option>
+						<option value="get">GET</option>
+					</select>
+				</div>
+			     `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas').appendChild(div);
+				}
+				if (selected == 'sSets') {
+					document.getElementById('datas').innerHTML = '';
+					let html = `
+					<div class="form-group">
+					<label for="exampleFormControlSelect2">Command Type</label>
+					<select
+						name="cmdT"
+						class="form-control"
+						id="exampleFormControlSelect2"
+						onchange="changes2()"
+					>
+						<option value="zadd">ZADD</option>
+						<option value="zrange">ZRANGE</option>
+					</select>
+				</div>
+			     `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas').appendChild(div);
+				}
+				changes2();
+			}
+
+			// =====================================
+			// =====================================
+			// =====================================
+			// =====================================
+
+			function changes2() {
+				let selected2 = document.getElementById('exampleFormControlSelect2')
+					.value;
+				if (selected2 == 'hget' || selected2 == 'hdel') {
+					document.getElementById('datas2').innerHTML = ' ';
+					let html = `
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="key"
+							placeholder="key"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="field"
+							placeholder="field"
+							required
+						/>
+					</div>
+			     `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas2').appendChild(div);
+				}
+				if (selected2 == 'hmset') {
+					document.getElementById('datas2').innerHTML = ' ';
+					let html = `
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="key"
+							placeholder="key"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="field"
+							placeholder="field"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="value"
+							placeholder="value"
+							required
+						/>
+					</div>
+			     `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas2').appendChild(div);
+				}
+				if (selected2 == 'set') {
+					document.getElementById('datas2').innerHTML = ' ';
+					let html = `
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="key"
+							placeholder="key"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="value"
+							placeholder="value"
+							required
+						/>
+					</div>
+			     `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas2').appendChild(div);
+				}
+				if (selected2 == 'get') {
+					document.getElementById('datas2').innerHTML = ' ';
+					let html = `
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="key"
+							placeholder="key"
+							required
+						/>
+					</div>
+			     `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas2').appendChild(div);
+				}
+				if (selected2 == 'zadd') {
+					document.getElementById('datas2').innerHTML = ' ';
+					let html = `
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="key"
+							placeholder="key"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="rank"
+							placeholder="rank"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="value"
+							placeholder="value"
+							required
+						/>
+					</div>
+			     `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas2').appendChild(div);
+				}
+				if (selected2 == 'zrange') {
+					document.getElementById('datas2').innerHTML = ' ';
+					let html = `
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							id="key"
+							placeholder="key"
+							required
+						/>
+					</div>
+			     `;
+					let div = document.createElement('div');
+					div.innerHTML = html;
+					document.getElementById('datas2').appendChild(div);
 				}
 			}
+
+			changes();
 		</script>
 	</body>
 </html>
